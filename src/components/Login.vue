@@ -30,7 +30,7 @@
             <v-btn
               class="teal dark-4"
               info
-              block=true
+              block
               :loading="loading4"
               @click.native="loader = 'loading4'"
               :disabled="loading4"
@@ -56,11 +56,14 @@ export default {
     return {
       email:'',
       password: '',
+      first: '',
+      middle: '',
+      last: '',
       loader: null,
-        loading: false,
-        loading2: false,
-        loading3: false,
-        loading4: false,
+      loading: false,
+      loading2: false,
+      loading3: false,
+      loading4: false,
     }
   },
   watch: {
@@ -74,7 +77,7 @@ export default {
 
         firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
           (user) => {
-            this.$router.replace('Hello')
+            this.$router.replace('Principal')
             store.commit('setEmailLogin', this.email)
           },
           (err) => {
@@ -93,7 +96,7 @@ export default {
     signIn: function() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
         (user) => {
-          this.$router.replace('Hello')
+          this.$router.replace('Principal')
           store.commit('setEmailLogin', this.email)
         },
         (err) => {

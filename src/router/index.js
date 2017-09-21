@@ -3,11 +3,12 @@ import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
+import Principal from '@/components/Principal'
 import firebase from 'firebase'
 
 Vue.use(Router)
 
-export default new Router({
+let router =  new Router({
   routes: [
     {
       path: '*',
@@ -34,6 +35,25 @@ export default new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/principal',
+      name: 'Principal',
+      component: Principal,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  let currentUser = firebase.auth().currentUser;
+  let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  if (requiresAuth && !currentUser) next('login')
+  else if (!requiresAuth && currentUser) next('principal')
+  else next()
+})
+
+export default router
