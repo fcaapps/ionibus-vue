@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
-import Login from '@/components/Login'
+import Login from '@/components/Login';
 import SignUp from '@/components/SignUp'
 import Principal from '@/components/Principal'
+import Eventos from '@/components/Eventos'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -42,7 +43,17 @@ let router =  new Router({
       component: Principal,
       meta: {
         requiresAuth: true
-      }
+      },
+      children: [
+        {
+          path: '/eventos',
+          name: 'Eventos',
+          component: Eventos,
+          meta: {
+            requiresAuth: true
+          }
+        }
+      ]
     }
   ]
 })

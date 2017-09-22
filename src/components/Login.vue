@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex style="margin-top: 100px;" xs12 md4 offset-md4>
         <v-card>
-          <v-toolbar class="teal dark-4" dark>
+          <v-toolbar class="blue-grey darken-2" dark>
             <v-toolbar-title style="color: white;">
             <label>iOnibus - Login</label>
             </v-toolbar-title>
@@ -28,7 +28,7 @@
               required
             ></v-text-field>
             <v-btn
-              class="teal dark-4"
+              class="blue-grey darken-2"
               info
               block
               :loading="loading4"

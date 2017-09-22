@@ -1,28 +1,33 @@
 <template>
+  <div id="app">
   <v-app light>
     <v-navigation-drawer
+      absolute
+      light
       persistent
+      overflow
       :mini-variant="miniVariant"
       :clipped="clipped"
       v-model="drawer"
       enable-resize-watcher
     >
-      <v-list>
+      <v-list class="pt-0" dense>
+        <v-divider></v-divider>
         <v-list-tile
-          value="true"
           v-for="(item, i) in items"
           :key="i"
+          @click=""
         >
           <v-list-tile-action>
             <v-icon light v-html="item.icon"></v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
+            <v-list-tile-title @click="itemMenu(item.title)" v-text="item.title"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed>
+    <v-toolbar fixed class="blue-grey lighten-4">
       <v-toolbar-side-icon @click.stop="drawer = !drawer" light></v-toolbar-side-icon>
       <v-btn
         icon
@@ -47,30 +52,17 @@
       </v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
-      <!-- <v-btn
+      <v-btn
         icon
         light
         @click.stop="rightDrawer = !rightDrawer"
       >
         <v-icon>menu</v-icon>
-      </v-btn> -->
+      </v-btn>
     </v-toolbar>
     <main>
-      <v-container fluid>
-        <v-slide-y-transition mode="out-in">
-          <v-layout column align-center>
-            <img src="/static/v.png" alt="Vuetify.js" class="mb-5">
-            <blockquote>
-              <v-btn @click="logout">Sair do Sistema</v-btn>
-              &#8220;First, solve the problem. Then, write the code.&#8221;
-              <footer>
-                <small>
-                  <em>&mdash;John Johnson</em>
-                </small>
-              </footer>
-            </blockquote>
-          </v-layout>
-        </v-slide-y-transition>
+      <v-container id="app" fluid>
+        <router-view class="view"></router-view>
       </v-container>
     </main>
     <v-navigation-drawer
@@ -91,6 +83,7 @@
       <span>&copy; 2017</span>
     </v-footer>
   </v-app>
+  </div>
 </template>
 
 <script>
@@ -101,16 +94,25 @@ export default {
   name: 'principal',
   data () {
     return {
-      clipped: false,
       drawer: true,
-      fixed: false,
       items: [
-        { icon: 'bubble_chart', title: 'Inspire' }
+        { icon: 'event', title: 'Eventos' },
+        { icon: 'home', title: 'Congregações' },
+        { icon: 'people', title: 'Responsáveis' },
+        { icon: 'people_outline', title: 'Capitães' },
+        { icon: 'nature_people', title: 'Passageiros' }
       ],
+      mini: false,
+      right: null,
+      clipped: true,
+      drawer: false,
+      fixed: true,
       miniVariant: false,
-      right: true,
+      right: null,
       rightDrawer: false,
-      title: 'iOnibus'
+      title: 'iOnibus',
+      menuItem: ''
+
     }
   },
   computed: {
@@ -122,8 +124,17 @@ export default {
     logout: function() {
       firebase.auth().signOut().then(() => {
         store.commit('setMensagem', '')
-        this.$router.replace('login')
+        this.$router.push('login')
       })
+    },
+    itemMenu: function(menuItem) {
+      switch (menuItem) {
+        case 'Eventos':
+          this.$router.replace('eventos')
+          break;
+        default:
+
+      }
     }
   }
 }
@@ -131,7 +142,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+/*h1, h2 {
   font-weight: normal;
 }
 
@@ -147,5 +158,5 @@ li {
 
 a {
   color: #42b983;
-}
+}*/
 </style>
