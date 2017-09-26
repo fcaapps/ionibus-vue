@@ -1,9 +1,24 @@
 <template>
   <div>
     <v-card>
+      <v-toolbar style="height: 40px;" class="blue-grey lighten-4">
+        <v-toolbar-title style="color: #1C1C1C; margin-left: 10px; margin-bottom: 20px;">Eventos</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn
+          style="margin-bottom: 30px;"
+          icon
+          light
+          @click.stop="fixed = !fixed"
+        >
+          <v-icon>close</v-icon>
+        </v-btn>
+        <!-- <v-btn icon class="red--text" slot="activator">
+          <v-icon>remove_circle</v-icon>
+        </v-btn> -->
+      </v-toolbar>
       <v-form v-model="valid" ref="form">
       <v-container grid-list-md>
-        <v-layout row wrap style="margin: 30px;">
+        <v-layout row wrap style="margin-left: 30px; margin-right: 30px; margin-bottom: 20px;">
             <v-flex xs12 sm3>
               <v-select
                 box
@@ -87,19 +102,16 @@
 
               ></v-select>
             </v-flex>
-          <v-flex xs12 sm4>
+          <v-flex xs12 sm2>
             <br>
             <v-btn
                   class="blue-grey lighten-1"
                   round primary
-                  @click="gravarEventos"
+                  @click="cadastraEventos"
                 >
                   <v-icon>save</v-icon>
                   <p style="margin: 5px;">Cadastrar</p>
-                  <span slot="loader" class="custom-loader">
-                    <v-icon light>cached</v-icon>
-                  </span>
-                </v-btn>
+            </v-btn>
           </v-flex>
         </v-layout>
       </v-container>
@@ -130,59 +142,117 @@
             <td class="text-xs-left">{{ props.item.localevento }}</td>
             <td class="text-xs-center">{{ props.item.statusevento }}</td>
             <td class="text-xs-center">
-              <v-dialog v-model="dialogEdit" persistent width="50%">
+              <v-dialog v-model="dialogEdit" persistent height="80%" width="80%">
                 <v-btn icon class="green--text" slot="activator">
                   <v-icon>edit</v-icon>
                 </v-btn>
                 <v-card>
-                  <v-card-title>
-                    <span class="headline">Eventos</span>
-                  </v-card-title>
+                  <v-toolbar style="height: 40px;" class="blue-grey lighten-4">
+                    <v-toolbar-title style="color: black; margin-left: 10px; margin-bottom: 20px;">Editando Eventos</v-toolbar-title>
+                  </v-toolbar>
+                  <!-- <v-card-title>
+                    <span class="headline">Editando Eventos</span>
+                  </v-card-title> -->
                   <v-card-text>
                     <v-container grid-list-md>
-                      <v-layout wrap>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field label="Legal first name" required></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field label="Legal last name" hint="example of persistent helper text"
-                            persistent-hint
-                            required
-                          ></v-text-field>
-                        </v-flex>
-                        <v-flex xs12>
-                          <v-text-field label="Email" required></v-text-field>
-                        </v-flex>
-                        <v-flex xs12>
-                          <v-text-field label="Password" type="password" required></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6>
-                          <v-select
-                            label="Age"
-                            required
-                            :items="['0-17', '18-29', '30-54', '54+']"
-                          ></v-select>
-                        </v-flex>
-                        <v-flex xs12 sm6>
-                          <v-select
-                            label="Interests"
-                            multiple
-                            autocomplete
-                            chips
-                            :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                          ></v-select>
-                        </v-flex>
+                      <v-layout row wrap style="margin: 30px;">
+                          <v-flex xs12 sm3>
+                            <v-select
+                              box
+                              label="Tipo"
+                              v-bind:items="tipo_evento"
+                              v-model="props.item.tipo"
+                              item-value="text"
+                              :rules="[(v) => !!v || 'Tipo é obrigatório']"
+                              required
+                            ></v-select>
+                          </v-flex>
+                          <v-flex xs12 sm3>
+                              <v-menu
+                                lazy
+                                :close-on-content-click="false"
+                                v-model="menuEdit"
+                                transition="scale-transition"
+                                offset-y
+                                full-width
+                                :nudge-left="40"
+                                max-width="290px"
+                              >
+                                <v-text-field
+                                  slot="activator"
+                                  label="Data do Evento"
+                                  v-model="props.item.dt_evento"
+                                  prepend-icon="event"
+                                  readonly
+                                  required
+                                  :rules="[(v) => !!v || 'Data do evento é obrigatório']"
+                                ></v-text-field>
+                                <v-date-picker
+                                  v-model="props.item.dt_evento"
+                                  no-title scrollable actions
+                                  required>
+                                  <template scope="{ save, cancel }">
+                                    <v-card-actions>
+                                      <v-btn flat primary @click.native="cancel()">Cancelar</v-btn>
+                                      <v-btn flat primary @click.native="save()">Ok</v-btn>
+                                    </v-card-actions>
+                                  </template>
+                                </v-date-picker>
+                              </v-menu>
+                          </v-flex>
+                          <v-flex xs12 sm3>
+                            <v-select
+                              box
+                              label="Circuito"
+                              v-bind:items="circuitoi"
+                              v-model="props.item.circuito"
+                              item-value="text"
+                              required
+                              :rules="[(v) => !!v || 'Circuito é obrigatório']"
+
+                            ></v-select>
+                          </v-flex>
+                          <v-flex xs12 sm3>
+                            <v-text-field label="Texto Base" v-model="props.item.textobase"></v-text-field>
+                          </v-flex>
+                          <v-flex xs12 sm4>
+                            <v-select
+                              box
+                              label="Local do Evento"
+                              v-bind:items="local_eventoi"
+                              v-model="props.item.localevento"
+                              item-value="text"
+                              required
+                              :rules="[(v) => !!v || 'Local do evento é obrigatório']"
+
+                            ></v-select>
+                          </v-flex>
+                          <v-flex xs12 sm4>
+                            <v-select
+                              box
+                              label="Status do Evento"
+                              v-bind:items="status_eventoi"
+                              v-model="props.item.statusevento"
+                              item-value="text"
+                              required
+                              :rules="[(v) => !!v || 'Status do evento é obrigatório']"
+
+                            ></v-select>
+                          </v-flex>
                       </v-layout>
                     </v-container>
-                    <small>*indicates required field</small>
+                    <!-- <small>* Campo Obrigatório</small> -->
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="blue--text darken-1" flat @click.native="dialogEdit = false">Fechar</v-btn>
-                    <v-btn class="blue--text darken-1" flat @click.native="dialogEdit = false">Salvar</v-btn>
+                    <v-btn class="red--text darken-1" flat @click.native="dialogEdit = false">
+                      <v-icon>close</v-icon>
+                      Fechar
+                    </v-btn>
+                    <v-btn @click="editaEventos(props.item, props.item.tipo, props.item.dt_evento, props.item.circuito, props.item.textobase, props.item.localevento, props.item.statusevento)" class="green--text darken-1" flat @click.native="dialogEdit = false">
+                      <v-icon>save</v-icon>
+                      Salvar
+                    </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -194,12 +264,18 @@
                 </v-btn>
                 <v-card>
                   <v-card-title>
-                    <div class="headline">Excluir Registro?</div>
+                    <div class="headline">Excluir Evento?</div>
                   </v-card-title>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn @click="removeEventos(props.item)" class="green--text darken-1" flat="flat" @click.native="dialogExcluir = false">Sim</v-btn>
-                    <v-btn class="green--text darken-1" flat="flat" @click.native="dialogExcluir = false">Não</v-btn>
+                    <v-btn @click="removeEventos(props.item)" class="green--text darken-1" flat="flat" @click.native="dialogExcluir = false">
+                      <v-icon>check_circle</v-icon>
+                      Sim
+                    </v-btn>
+                    <v-btn class="red--text darken-1" flat="flat" @click.native="dialogExcluir = false">
+                      <v-icon>close</v-icon>
+                      Não
+                    </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -261,6 +337,7 @@ export default {
       ],
       dt_evento: null,
       menu: false,
+      menuEdit: false,
       modal: false,
       picker: null,
       formatted: null,
@@ -305,7 +382,7 @@ export default {
       getConfig() {
         return console.log(store.getters.getConfig);
       },
-      gravarEventos() {
+      cadastraEventos() {
         if (this.$refs.form.validate()) {
             Eventos.push({
               tipo: this.evento,
@@ -313,13 +390,28 @@ export default {
               circuito: this.circuito,
               textobase: this.texto_base,
               localevento: this.local_evento,
-              statusevento: this.status_evento
+              statusevento: this.status_evento,
+              // edit: false
             });
         }
       },
       removeEventos(items) {
         Eventos.child(items['.key']).remove();
-      }
+      },
+
+      editaEventos(items, tipo, dt_evento, circuito, textobase, localevento, statusevento) {
+        Eventos.child(items['.key']).set({
+          tipo,
+          dt_evento,
+          circuito,
+          textobase,
+          localevento,
+          statusevento
+        })
+      },
+      atualizaEventos(items) {
+        Eventos.child(items['.key']);
+      },
     }
 }
 </script>
