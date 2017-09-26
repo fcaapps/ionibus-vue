@@ -5,7 +5,10 @@ Vue.use(Vuex);
 
 const state = {
   mensagem: '',
-  emailLogin: ''
+  emailLogin: '',
+  // config: '',
+  // firebaseApp: '',
+  // dbFB:''
 
 };
 
@@ -15,7 +18,16 @@ const mutations = {
   },
   setEmailLogin(state, email) {
     state.emailLogin = email
-  }
+  },
+  // setConfig(state, config) {
+  //   state.config = config
+  // },
+  // setFirebaseApp(state, firebaseapp) {
+  //   state.firebaseApp = firebaseapp
+  // },
+  // setDbFB(state, db) {
+  //   state.dbFB = db
+  // }
 };
 
 export default new Vuex.Store({
@@ -23,6 +35,9 @@ export default new Vuex.Store({
   mutations,
   getters:  {
     getMensagem: state => state.mensagem,
-    getEmailLogin: state => state.emailLogin
+    getEmailLogin: state => state.emailLogin,
+    // getConfig: state => state.config,
+    // getFirebaseApp: state => state.firebaseApp,
+    // getDbFB: state => state.dbFB
   }
 })

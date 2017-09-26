@@ -5,22 +5,39 @@ import Vuetify from 'vuetify'
 import './stylus/main.styl'
 import App from './App'
 import router from './router'
-import firebase from 'firebase'
+import './firebase'
+import VueFire from 'vuefire'
+import store from './store'
+import firebase from 'firebase';
 
-Vue.use(Vuetify)
+Vue.use(VueFire);
+Vue.use(Vuetify);
 Vue.config.productionTip = false
 
 let app;
-var config = {
-    apiKey: "AIzaSyCCmpW0a5ahFZ5h1F3pWXz_lWpixXGJAPM",
-    authDomain: "vue-firebase-tutorial-ccbce.firebaseapp.com",
-    databaseURL: "https://vue-firebase-tutorial-ccbce.firebaseio.com",
-    projectId: "vue-firebase-tutorial-ccbce",
-    storageBucket: "",
-    messagingSenderId: "310623566606"
-  };
+// var config = {
+//     apiKey: "AIzaSyCNAHsRp8yS2FDUWlkZIAWmyRt3WHzGy88",
+//     authDomain: "ionibus-ac0ed.firebaseapp.com",
+//     databaseURL: "https://ionibus-ac0ed.firebaseio.com",
+//     projectId: "ionibus-ac0ed",
+//     storageBucket: "ionibus-ac0ed.appspot.com",
+//     messagingSenderId: "579691884183"
+//   };
+// store.commit('setConfig', {
+//   apiKey: "AIzaSyCNAHsRp8yS2FDUWlkZIAWmyRt3WHzGy88",
+//   authDomain: "ionibus-ac0ed.firebaseapp.com",
+//   databaseURL: "https://ionibus-ac0ed.firebaseio.com",
+//   projectId: "ionibus-ac0ed",
+//   storageBucket: "ionibus-ac0ed.appspot.com",
+//   messagingSenderId: "579691884183"
+// });
 
-firebase.initializeApp(config)
+// var firebaseapp = firebase.initializeApp(store.getters.getConfig);
+// store.commit('setFirebaseApp',firebaseapp);
+//
+// var db = firebaseapp.database();
+// store.commit('setDbFB',db);
+
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (!app) {

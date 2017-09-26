@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex style="margin-top: 100px;" xs12 md4 offset-md4>
         <v-card>
-          <v-toolbar class="teal dark-4" dark>
+          <v-toolbar class="blue-grey darken-2" dark>
             <v-toolbar-title style="color: white;">
             <label>Cadastro de Usuário</label>
             </v-toolbar-title>
@@ -28,7 +28,7 @@
               required
             ></v-text-field>
             <v-btn
-              class="teal dark-4"
+              class="blue-grey darken-2"
               info
               block=true
               :loading="loading4"
@@ -71,14 +71,39 @@ export default {
   data: function(){
     return {
       email: '',
-      password: ''
+      password: '',
+      loader: null,
+      loading: false,
+      loading2: false,
+      loading3: false,
+      loading4: false
     }
   },
+  watch: {
+      loader () {
+        const l = this.loader
+        this[l] = !this[l]
+
+        setTimeout(() => (this[l] = false), 3000)
+
+        this.loader = null
+
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+          (user) => {
+            this.$router.replace('Principal')
+          },
+          (err) => {
+            alert('Oops. '+ err.message)
+          }
+        );
+
+      }
+    },
   methods: {
     signUp: function() {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
         (user) => {
-          this.$router.replace('hello')
+          this.$router.replace('Principal')
         },
         (err) => {
           alert('Oops. '+ err.message)
