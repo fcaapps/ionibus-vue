@@ -2,13 +2,13 @@
   <div id="cadastro_evento">
     <v-card>
       <!-- Toolbar no topo da página -->
-      <v-toolbar style="height: 40px;" class="blue-grey lighten-4">
+      <!-- <v-toolbar style="height: 40px;" class="cyan">
         <v-toolbar-title style="color: #1C1C1C; margin-left: 10px; margin-bottom: 20px;">Eventos</v-toolbar-title>
-      </v-toolbar>
+      </v-toolbar> -->
       <!-- Formulário de Cadastro com Validador -->
       <v-form v-model="valid" ref="form">
       <v-container grid-list-md>
-        <v-layout row wrap style="margin-left: 30px; margin-right: 30px; margin-bottom: 8px; margin-top: 20px;">
+        <v-layout row wrap style="margin-left: 30px; margin-right: 30px;">
             <!-- Tipo Evento -->
             <v-flex xs12 sm3>
               <v-select
@@ -101,12 +101,23 @@
             <br>
             <!-- Butão de Cadastro do Evento -->
             <v-btn
-                  class="blue-grey lighten-1"
+                  class="cyan"
                   round primary
                   @click="cadastraEventos"
                 >
                   <v-icon>save</v-icon>
                   <p style="margin: 5px;">Cadastrar</p>
+            </v-btn>
+          </v-flex>
+          <v-flex xs12 sm2>
+            <br>
+            <!-- Butão de Limpar Campos -->
+            <v-btn
+                  round primary
+                  @click="limparFieldsEventos"
+                >
+                  <v-icon>clear_all</v-icon>
+                  <p style="margin: 5px;">Limpar</p>
             </v-btn>
           </v-flex>
         </v-layout>
@@ -164,6 +175,14 @@ export default {
               statusevento: this.status_evento
             });
         }
+      },
+      limparFieldsEventos() {
+        this.tp_evento = ''
+        this.dt_evento = ''
+        this.circuito = ''
+        this.texto_base = ''
+        this.local_evento = ''
+        this.status_evento = ''
       }
     }
 }

@@ -142,7 +142,7 @@
                 </v-card>
               </v-dialog>
             </td>
-            <td style="font-size: 10px; width: 20px;" class="text-xs-center">
+            <td class="text-xs-center">
               <v-dialog v-model="dialogExcluir" lazy absolute>
                 <v-btn @click="getKey(props.item)" icon class="red--text" slot="activator">
                   <v-icon>remove_circle</v-icon>
@@ -235,11 +235,12 @@
       this.$bindAsArray('eventos_i', Eventos);
     },
     methods: {
-
+      //Excluir Eventos Cadastrado
       removeEventos() {
         Eventos.child(this.keyEvento).remove();
       },
 
+      //Recupera chave Json e alimenta campos de edição
       getKey(items){
 
         this.keyEvento = items['.key'];
@@ -253,6 +254,7 @@
 
       },
 
+      //Salva Registros Editados
       salvaEdicaoEventos(tipo, dt_evento, circuito, textobase, localevento, statusevento) {
         Eventos.child(this.keyEvento).set({
           tipo,

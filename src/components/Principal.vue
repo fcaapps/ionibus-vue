@@ -27,7 +27,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed class="blue-grey lighten-4">
+    <v-toolbar fixed class="cyan">
       <v-toolbar-side-icon @click.stop="drawer = !drawer" light></v-toolbar-side-icon>
       <v-btn
         icon
