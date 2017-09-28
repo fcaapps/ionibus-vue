@@ -132,6 +132,9 @@ export default {
         case 'Eventos':
           this.$router.replace('eventos')
           break;
+        case 'Congregações':
+            this.$router.replace('eventos')
+            break;
         default:
 
       }
