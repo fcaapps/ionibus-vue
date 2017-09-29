@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="consulta_evento">
     <v-card>
     <!-- Componente de Pesquisa   -->
     <v-container grid-list-md>
@@ -33,8 +33,8 @@
                   <v-icon>edit</v-icon>
                 </v-btn>
                 <v-card>
-                  <v-toolbar style="height: 40px;" class="blue-grey lighten-4">
-                    <v-toolbar-title style="color: black; margin-left: 10px; margin-bottom: 20px;">Editando Eventos</v-toolbar-title>
+                  <v-toolbar style="height: 40px;" class="teal">
+                    <v-toolbar-title style="color: white; margin-left: 10px; margin-bottom: 23px;">Editando Eventos</v-toolbar-title>
                   </v-toolbar>
                   <v-card-text>
                     <v-container grid-list-md>

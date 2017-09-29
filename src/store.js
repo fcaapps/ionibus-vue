@@ -6,10 +6,13 @@ Vue.use(Vuex);
 const state = {
   mensagem: '',
   emailLogin: '',
-  // config: '',
-  // firebaseApp: '',
-  // dbFB:''
-
+  tpEvento: '',
+  dtEvento: '',
+  circuito: '',
+  textoBase: '',
+  localEvento: '',
+  statusEvento: '',
+  keyEvento: '',
 };
 
 const mutations = {
@@ -19,15 +22,27 @@ const mutations = {
   setEmailLogin(state, email) {
     state.emailLogin = email
   },
-  // setConfig(state, config) {
-  //   state.config = config
-  // },
-  // setFirebaseApp(state, firebaseapp) {
-  //   state.firebaseApp = firebaseapp
-  // },
-  // setDbFB(state, db) {
-  //   state.dbFB = db
-  // }
+  setTpEvento(state, tp_evento) {
+    state.tpEvento = tp_evento
+  },
+  setDtEvento(state, dt_evento) {
+    state.dtEvento = dt_evento
+  },
+  setCircuito(state, circuito) {
+    state.circuito = circuito
+  },
+  setTextoBase(state, texto_base) {
+    state.textoBase = texto_base
+  },
+  setLocalEvento(state, local_evento) {
+    state.localEvento = local_evento
+  },
+  setStatusEvento(state, status_evento) {
+    state.statusEvento = status_evento
+  },
+  setKeyEvento(state, key_evento) {
+    state.keyEvento = key_evento
+  }
 };
 
 export default new Vuex.Store({
@@ -36,8 +51,12 @@ export default new Vuex.Store({
   getters:  {
     getMensagem: state => state.mensagem,
     getEmailLogin: state => state.emailLogin,
-    // getConfig: state => state.config,
-    // getFirebaseApp: state => state.firebaseApp,
-    // getDbFB: state => state.dbFB
+    getTpEvento: state => state.tpEvento,
+    getDtEvento: state => state.dtEvento,
+    getCircuito: state => state.circuito,
+    getTextoBase: state => state.textoBase,
+    getLocalEvento: state => state.localEvento,
+    getStatusEvento: state => state.statusEvento,
+    getKeyEvento: state => state.keyEvento
   }
 })

@@ -2,6 +2,7 @@
   <div id="app">
   <v-app light>
     <v-navigation-drawer
+      class="green lighten-4"
       absolute
       light
       persistent
@@ -11,7 +12,7 @@
       v-model="drawer"
       enable-resize-watcher
     >
-      <v-list class="pt-0" dense>
+      <v-list class="green lighten-4" dense>
         <v-divider></v-divider>
         <v-list-tile
           v-for="(item, i) in items"
@@ -27,7 +28,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed class="cyan">
+    <v-toolbar fixed class="teal">
       <v-toolbar-side-icon @click.stop="drawer = !drawer" light></v-toolbar-side-icon>
       <v-btn
         icon
@@ -67,11 +68,11 @@
     </main>
     <v-navigation-drawer
       temporary
-      :right="right"
+      :right="left"
       v-model="rightDrawer"
     >
       <v-list>
-        <v-list-tile @click="right = !right">
+        <v-list-tile @click="left = !left">
           <v-list-tile-action>
             <v-icon light>compare_arrows</v-icon>
           </v-list-tile-action>
@@ -104,13 +105,14 @@ export default {
       ],
       mini: false,
       right: null,
+      left: null,
       clipped: true,
       drawer: false,
       fixed: true,
       miniVariant: false,
       right: null,
       rightDrawer: false,
-      title: 'iOnibus',
+      title: 'Sistema Coordenado de Transportes',
       menuItem: ''
 
     }

@@ -2,7 +2,7 @@
   <div id="cadastro_evento">
     <v-card>
       <!-- Toolbar no topo da página -->
-      <!-- <v-toolbar style="height: 40px;" class="cyan">
+      <!-- <v-toolbar class="transparent" style="height: 40px;">
         <v-toolbar-title style="color: #1C1C1C; margin-left: 10px; margin-bottom: 20px;">Eventos</v-toolbar-title>
       </v-toolbar> -->
       <!-- Formulário de Cadastro com Validador -->
@@ -101,8 +101,9 @@
             <br>
             <!-- Butão de Cadastro do Evento -->
             <v-btn
-                  class="cyan"
-                  round primary
+                  style="width: 150px;"
+                  class="teal darken-1"
+                  primary
                   @click="cadastraEventos"
                 >
                   <v-icon>save</v-icon>
@@ -113,7 +114,9 @@
             <br>
             <!-- Butão de Limpar Campos -->
             <v-btn
-                  round primary
+                  style="color: black; width: 150px;"
+                  class="transparent"
+                  primary
                   @click="limparFieldsEventos"
                 >
                   <v-icon>clear_all</v-icon>
