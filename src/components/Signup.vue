@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex style="margin-top: 100px;" xs12 md4 offset-md4>
         <v-card>
-          <v-toolbar class="blue-grey darken-2" dark>
+          <v-toolbar class="teal" dark>
             <v-toolbar-title style="color: white;">
             <label>Cadastro de Usuário</label>
             </v-toolbar-title>
@@ -28,7 +28,7 @@
               required
             ></v-text-field>
             <v-btn
-              class="blue-grey darken-2"
+              class="teal"
               info
               block=true
               :loading="loading4"

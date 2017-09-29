@@ -53,13 +53,51 @@
       </v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn
+      <!-- <v-btn
         icon
         light
         @click.stop="rightDrawer = !rightDrawer"
       >
         <v-icon>menu</v-icon>
+      </v-btn> -->
+      <v-btn
+        icon
+        light
+      >
+        <v-icon>apps</v-icon>
       </v-btn>
+      <v-btn
+        icon
+        light
+      >
+        <v-icon>refresh</v-icon>
+      </v-btn>
+      <v-menu
+              >
+            <v-btn icon slot="activator">
+              <v-icon>more_vert</v-icon>
+            </v-btn>
+            <v-list>
+              <v-list-tile avatar>
+                <v-list-tile-avatar>
+                  <v-icon x-large light>person_pin</v-icon>
+                </v-list-tile-avatar>
+                <v-list-tile-content>
+                  <v-list-tile-title style="color: teal;">Usuário logado:</v-list-tile-title>
+                  <v-list-tile-sub-title>{{emailLogado}}</v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-divider></v-divider>
+              <v-list-tile @click="logout()">
+                <v-list-tile-avatar>
+                  <v-icon x-large light>exit_to_app</v-icon>
+                </v-list-tile-avatar>
+                <v-list-tile-content>
+                  <v-list-tile-title style="color: teal;">Logout</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+      </v-menu>
     </v-toolbar>
     <main>
       <v-container id="app" fluid>
@@ -68,11 +106,11 @@
     </main>
     <v-navigation-drawer
       temporary
-      :right="left"
+      :right="right"
       v-model="rightDrawer"
     >
       <v-list>
-        <v-list-tile @click="left = !left">
+        <v-list-tile @click="right = !right">
           <v-list-tile-action>
             <v-icon light>compare_arrows</v-icon>
           </v-list-tile-action>
@@ -104,8 +142,7 @@ export default {
         { icon: 'nature_people', title: 'Passageiros' }
       ],
       mini: false,
-      right: null,
-      left: null,
+      right: true,
       clipped: true,
       drawer: false,
       fixed: true,
