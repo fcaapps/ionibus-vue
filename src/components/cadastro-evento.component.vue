@@ -143,7 +143,6 @@ export default {
       texto_base: '',
       local_evento: '',
       status_evento: '',
-      items: [this.eventos],
       menu: false,
       lista_tipo_evento: [
           { text: 'Congresso Regional' },

@@ -98,7 +98,7 @@
                           <v-flex xs12 sm3>
                             <v-text-field
                               label="Texto Base"
-                              v-model="texto_base"
+                              v-model="texto_base"                              
                             ></v-text-field>
                           </v-flex>
                           <!-- Local do Evento -->
@@ -220,7 +220,7 @@
         keyEvento: '',
         headers: [
             { text: 'Tipo', align: 'left', value: 'tipo'},
-            { text: 'Data', align: 'dt_evento'},
+            { text: 'Data', align: 'center', value: 'dt_evento'},
             { text: 'Circuito', align:'left', value: 'circuito'},
             { text: 'Texto', align: 'left', value: 'textobase'},
             { text: 'Local', align: 'left', value: 'localevento'},

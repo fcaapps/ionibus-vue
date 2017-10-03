@@ -1,6 +1,6 @@
 <template>
   <div>
-    <cadastro-sistema></cadastro-sistema>
+    <cadastro-evento></cadastro-evento>
     <consulta-evento></consulta-evento>
   </div>
 </template>
@@ -12,7 +12,7 @@ import ConsultaEvento from './consulta-evento.component';
 export default {
   name: 'eventos',
   components: {
-    'cadastro-sistema': CadastroEvento,
+    'cadastro-evento': CadastroEvento,
     'consulta-evento': ConsultaEvento
   },
   data() {

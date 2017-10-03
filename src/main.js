@@ -10,9 +10,15 @@ import VueFire from 'vuefire'
 import store from './store'
 import firebase from 'firebase';
 
+const VueInputMask = require('vue-inputmask').default
+
+Vue.use(VueInputMask);
 Vue.use(VueFire);
 Vue.use(Vuetify);
 Vue.config.productionTip = false
+
+// Vue.filter 'phone', (value) ->
+//     return value.replace(/^([0-9]{3})([0-9]{3})([0-9]{4})$/, '($1)-$2-$3')
 
 let app;
 // var config = {

@@ -1,9 +1,8 @@
 <template>
   <div id="app">
-  <v-app light>
+  <v-app light >
     <v-navigation-drawer
       class="green lighten-4"
-      absolute
       light
       persistent
       overflow
@@ -13,7 +12,6 @@
       enable-resize-watcher
     >
       <v-list class="green lighten-4" dense>
-        <v-divider></v-divider>
         <v-list-tile
           v-for="(item, i) in items"
           :key="i"
@@ -53,13 +51,6 @@
       </v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
-      <!-- <v-btn
-        icon
-        light
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>menu</v-icon>
-      </v-btn> -->
       <v-btn
         icon
         light
@@ -75,7 +66,7 @@
       <v-menu
               >
             <v-btn icon slot="activator">
-              <v-icon>more_vert</v-icon>
+              <v-icon light>more_vert</v-icon>
             </v-btn>
             <v-list>
               <v-list-tile avatar>
@@ -84,7 +75,7 @@
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                   <v-list-tile-title style="color: teal;">Usuário logado:</v-list-tile-title>
-                  <v-list-tile-sub-title>{{emailLogado}}</v-list-tile-sub-title>
+                  <v-list-tile-sub-title>{{usuarioLogado}}</v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
               <v-divider></v-divider>
@@ -150,15 +141,20 @@ export default {
       right: null,
       rightDrawer: false,
       title: 'Sistema Coordenado de Transportes',
-      menuItem: ''
+      menuItem: '',
+      usuarioLogado: ''
 
     }
   },
-  computed: {
-    emailLogado() {
-      return store.getters.getEmailLogin
-    }
+  created: function() {
+    this.usuarioLogado = firebase.auth().currentUser.email;
   },
+  // computed: {
+  //   emailLogado() {
+  //     this.emailLog = store.getters.getEmailLogin
+  //     return this.emailLogado
+  //   }
+  // },
   methods: {
     logout: function() {
       firebase.auth().signOut().then(() => {
@@ -172,7 +168,7 @@ export default {
           this.$router.replace('eventos')
           break;
         case 'Congregações':
-            this.$router.replace('eventos')
+            this.$router.replace('congregacao')
             break;
         default:
 

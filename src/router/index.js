@@ -5,6 +5,7 @@ import Login from '@/components/Login';
 import SignUp from '@/components/SignUp'
 import Principal from '@/components/Principal'
 import Eventos from '@/components/Eventos'
+import Congregacao from '@/components/Congregacao'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -37,6 +38,19 @@ let router =  new Router({
         requiresAuth: true
       }
     },
+    // {
+    //   path: '/principal/:slug',
+    //   meta: {
+    //       requiresAuth: true
+    //   },
+    //   children: [
+    //     {
+    //       path: '',
+    //       name: 'Principal',
+    //       component: require('./Principal')
+    //     }
+    //   ]
+    // }
     {
       path: '/principal',
       name: 'Principal',
@@ -49,6 +63,14 @@ let router =  new Router({
           path: '/eventos',
           name: 'Eventos',
           component: Eventos,
+          meta: {
+            requiresAuth: true
+          }
+        },
+        {
+          path: '/congregacao',
+          name: 'Congregacao',
+          component: Congregacao,
           meta: {
             requiresAuth: true
           }
