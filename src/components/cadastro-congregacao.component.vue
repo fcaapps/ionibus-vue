@@ -130,6 +130,7 @@ export default {
       nome: '',
       endereco: '',
       circuito: '',
+      valid: false,
       coordenador: '',
       tel_coordenador: '',
       email_coordenador: '',

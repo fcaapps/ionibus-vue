@@ -9,10 +9,11 @@ import './firebase'
 import VueFire from 'vuefire'
 import store from './store'
 import firebase from 'firebase';
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap/dist/css/bootstrap.css'
 
-const VueInputMask = require('vue-inputmask').default
-
-Vue.use(VueInputMask);
+Vue.use(BootstrapVue);
 Vue.use(VueFire);
 Vue.use(Vuetify);
 Vue.config.productionTip = false

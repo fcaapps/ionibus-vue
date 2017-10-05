@@ -6,6 +6,7 @@ import SignUp from '@/components/SignUp'
 import Principal from '@/components/Principal'
 import Eventos from '@/components/Eventos'
 import Congregacao from '@/components/Congregacao'
+import Responsaveis from '@/components/Responsaveis'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -71,6 +72,14 @@ let router =  new Router({
           path: '/congregacao',
           name: 'Congregacao',
           component: Congregacao,
+          meta: {
+            requiresAuth: true
+          }
+        },
+        {
+          path: '/responsaveis',
+          name: 'Responsaveis',
+          component: Responsaveis,
           meta: {
             requiresAuth: true
           }

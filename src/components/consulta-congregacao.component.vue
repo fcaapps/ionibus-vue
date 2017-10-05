@@ -161,7 +161,7 @@
       return {
         congregacao_i,
         nome: '',
-        endereco: '',
+        endereco: '',        
         coordenador: '',
         tel_coordenador: '',
         email_coordenador: '',

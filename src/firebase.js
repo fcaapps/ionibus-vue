@@ -12,3 +12,4 @@ const app = initializeApp({
 export const db = app.database();
 export const Eventos = db.ref('Eventos');
 export const Congregacao = db.ref('Congregacao');
+export const Responsaveis = db.ref('Responsaveis');

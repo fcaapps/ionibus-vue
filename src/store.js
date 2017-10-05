@@ -1,7 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { Congregacao } from './firebase';
 
 Vue.use(Vuex);
+
+var congregacao_i = [];
 
 const state = {
   mensagem: '',
@@ -13,6 +16,7 @@ const state = {
   localEvento: '',
   statusEvento: '',
   keyEvento: '',
+  listaCongregacao: []
 };
 
 const mutations = {
@@ -57,6 +61,13 @@ export default new Vuex.Store({
     getTextoBase: state => state.textoBase,
     getLocalEvento: state => state.localEvento,
     getStatusEvento: state => state.statusEvento,
-    getKeyEvento: state => state.keyEvento
+    getKeyEvento: state => state.keyEvento,
+    getListaCongregacao: state => {
+      this.$bindAsArray('congregacao_i', Congregacao);
+      for (var i = 0; i < this.congregacao_i.length; i++) {
+        state.listaCongregacao.push({ text: this.congregacao_i[i].nome });
+      };
+      return state.listaCongregacao
+    }
   }
 })

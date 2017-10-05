@@ -140,6 +140,7 @@ export default {
       tp_evento: '',
       dt_evento: '',
       circuito: '',
+      valid: false,
       texto_base: '',
       local_evento: '',
       status_evento: '',

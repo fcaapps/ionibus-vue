@@ -109,8 +109,8 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-footer :fixed="fixed">
-      <span>&copy; 2017</span>
+    <v-footer :fixed="fixed" class="teal darken-3">
+      <span style="font-size: 14px;">&copy; 2017 - Direitos Reservados</span>
     </v-footer>
   </v-app>
   </div>
@@ -169,6 +169,9 @@ export default {
           break;
         case 'Congregações':
             this.$router.replace('congregacao')
+            break;
+        case 'Responsáveis':
+            this.$router.replace('responsaveis')
             break;
         default:
 
