@@ -110,7 +110,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-footer :fixed="fixed" class="teal darken-3">
-      <span style="font-size: 14px;">&copy; 2017 - Direitos Reservados</span>
+      <span style="font-size: 14px;">&copy; 2017 - Direitos Reservados - 2017</span>
     </v-footer>
   </v-app>
   </div>

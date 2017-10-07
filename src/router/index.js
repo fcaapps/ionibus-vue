@@ -9,6 +9,7 @@ import Congregacao from '@/components/Congregacao'
 import Responsaveis from '@/components/Responsaveis'
 import firebase from 'firebase'
 
+
 Vue.use(Router)
 
 let router =  new Router({

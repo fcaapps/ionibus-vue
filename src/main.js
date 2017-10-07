@@ -9,11 +9,8 @@ import './firebase'
 import VueFire from 'vuefire'
 import store from './store'
 import firebase from 'firebase';
-import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import 'bootstrap/dist/css/bootstrap.css'
+import('.././node_modules/vuetify/dist/vuetify.min.css');
 
-Vue.use(BootstrapVue);
 Vue.use(VueFire);
 Vue.use(Vuetify);
 Vue.config.productionTip = false

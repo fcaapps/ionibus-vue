@@ -37,27 +37,11 @@
               ></v-text-field>
             </v-flex>
             <!-- Telefone do Coordenador -->
-            <!-- <input type="text" style="border: 20;" v-mask="'99/99/9999'" /> -->
             <v-flex xs12 sm2>
-              <!-- <input type="text" v-mask="'99/99/9999'"/> -->
-              <!-- <masked-input
-                type="text"
-                name="phone"
-                class="form-control"
-                v-model="tel_coordenador"
-                :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
-                :guide="false"
-                placeholderChar="#">
-              </masked-input> -->
-              <!-- <masked-input
-                mask="\+\1 (11) 11111-1111"
-                placeholder-char="-"
-                placeholder="Phone number"
-                type="tel" /> -->
               <v-text-field
                 label="Telefone Coord."
                 v-model="tel_coordenador"
-                :mask="'(99)99999-9999'"
+                :mask="mask"
                 required
                 :rules="[(v) => !!v || 'Telefone é obrigatório']"
               ></v-text-field>
@@ -138,7 +122,9 @@ export default {
       lista_circuito: [
         { text: 'CE01 - CIRCUITO CE O1' },
         { text: 'CE02 - CIRCUITO CE O2' }
-      ]
+      ],
+      mask: 'credit-card',
+      value: '4444444444444444'
     }
   },
   methods: {

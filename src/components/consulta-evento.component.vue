@@ -98,7 +98,7 @@
                           <v-flex xs12 sm3>
                             <v-text-field
                               label="Texto Base"
-                              v-model="texto_base"                              
+                              v-model="texto_base"
                             ></v-text-field>
                           </v-flex>
                           <!-- Local do Evento -->

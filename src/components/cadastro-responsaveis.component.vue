@@ -19,7 +19,7 @@
               ></v-text-field>
             </v-flex>
             <!-- Tipo do Responsavel -->
-            <v-flex xs12 sm3>
+            <v-flex xs12 sm4>
                 <v-select
                 box
                 label="Tipo"
@@ -31,11 +31,13 @@
               ></v-select>
             </v-flex>
             <!-- Congregacao -->
-            <v-flex xs12 sm3>
+            <v-flex xs12 sm4>
               <!-- <b-form-select v-model="congrega" :options="lista_congregacao" class="mb-3">
               </b-form-select> -->
                 <v-select
                 @click.once="getCongregacao"
+                @keyup.alt.40="getCongregacao"
+                @keyup.down="getCongregacao"
                 box
                 label="Congregacão"
                 v-bind:items="lista_congregacao"
@@ -46,7 +48,7 @@
               ></v-select>
             </v-flex>
             <!-- Email do Responsavel -->
-            <v-flex xs12 sm3>
+            <v-flex xs12 sm4>
               <v-text-field
                 label="E-mail do Responsável"
                 v-model="email_responsavel"
@@ -55,7 +57,7 @@
               ></v-text-field>
             </v-flex>
             <!-- Telefone do Responsavel -->
-            <v-flex xs12 sm2>
+            <v-flex xs12 sm4>
               <v-text-field
                 label="Telefone Resp."
                 v-model="tel_responsavel"
@@ -111,16 +113,16 @@ export default {
       tipo_responsavel: '',
       tel_responsavel: '',
       email_responsavel: '',
+      carregadoCong: false,
       menu: false,
       lista_tipo_responsavel: [
         { text: 'Encarregado Geral' },
         { text: 'Encarregado de Congregação' },
         { text: 'Encarregado do Evento' },
         { text: 'Ajudante de Congregação' },
-        { text: 'Encarregado de Congregação' },
         { text: 'Ajudante do Evento' }
       ],
-      lista_congregacao: [],
+      lista_congregacao: []
     }
   },
   firebase: {
@@ -139,9 +141,14 @@ export default {
             });
         }
       },
+      //Alimenta Combobox Congregacao
       getCongregacao() {
-        for (var i = 0; i < this.congregacao.length; i++) {
-          this.lista_congregacao.push({ text: this.congregacao[i].nome });
+        if (this.carregadoCong == false) {
+          for (var i = 0; i < this.congregacao.length; i++) {
+            this.lista_congregacao.push({ text: this.congregacao[i].nome });
+          }
+          this.lista_congregacao.sort("nome");
+          this.carregadoCong = true;
         };
       },
       //Limpa Campos

@@ -42,7 +42,6 @@
                           <!-- Nome da Congregação -->
                           <v-flex xs12 sm3>
                             <v-text-field
-                              autofocus
                               label="Nome"
                               v-model="nome"
                               item-value="text"
@@ -126,7 +125,7 @@
                 </v-btn>
                 <v-card>
                   <v-card-title>
-                    <div class="headline">Excluir Evento?</div>
+                    <div class="headline">Excluir Congregação?</div>
                   </v-card-title>
                   <v-spacer></v-spacer>
                   <v-btn @click="removeCongregacao()" class="green--text darken-1" flat="flat" @click.native="dialogExcluir = false">
@@ -161,7 +160,7 @@
       return {
         congregacao_i,
         nome: '',
-        endereco: '',        
+        endereco: '',
         coordenador: '',
         tel_coordenador: '',
         email_coordenador: '',
