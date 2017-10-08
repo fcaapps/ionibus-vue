@@ -7,6 +7,7 @@ import Principal from '@/components/Principal'
 import Eventos from '@/components/Eventos'
 import Congregacao from '@/components/Congregacao'
 import Responsaveis from '@/components/Responsaveis'
+import Capitaes from '@/components/Capitaes'
 import firebase from 'firebase'
 
 
@@ -81,6 +82,14 @@ let router =  new Router({
           path: '/responsaveis',
           name: 'Responsaveis',
           component: Responsaveis,
+          meta: {
+            requiresAuth: true
+          }
+        },
+        {
+          path: '/capitaes',
+          name: 'Capitaes',
+          component: Capitaes,
           meta: {
             requiresAuth: true
           }

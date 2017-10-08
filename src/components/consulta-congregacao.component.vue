@@ -13,7 +13,7 @@
           v-model="search"
         ></v-text-field>
       </v-card-title>
-      <!-- Grid com a consulta do Evento -->
+      <!-- Grid com a consulta de Congregacao -->
       <v-data-table
           v-bind:headers="headers"
           v-bind:items="congregacao_i"

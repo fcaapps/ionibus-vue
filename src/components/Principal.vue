@@ -173,6 +173,9 @@ export default {
         case 'Responsáveis':
             this.$router.replace('responsaveis')
             break;
+        case 'Capitães':
+            this.$router.replace('capitaes')
+            break;
         default:
 
       }

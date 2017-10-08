@@ -1,5 +1,5 @@
 <template>
-  <div class="consulta_responsaveis">
+  <div class="consulta_capitaes">
     <v-card>
     <!-- Componente de Pesquisa   -->
     <v-container grid-list-md>
@@ -13,20 +13,20 @@
           v-model="search"
         ></v-text-field>
       </v-card-title>
-      <!-- Grid com a consulta do Responsaveis -->
+      <!-- Grid com a consulta de Capitães -->
       <v-data-table
           v-bind:headers="headers"
-          v-bind:items="responsavel_i"
+          v-bind:items="capitaes_i"
           v-bind:search="search"
         >
         <template slot="items" scope="props">
             <td class="text-xs-left">{{ props.item.nome }}</td>
-            <td class="text-xs-left">{{ props.item.tipo }}</td>
             <td class="text-xs-left">{{ props.item.congregacao }}</td>
-            <td class="text-xs-left">{{ props.item.email }}</td>
-            <td class="text-xs-left">{{ props.item.tel }}</td>
+            <td class="text-xs-left">{{ props.item.responsavel }}</td>
+            <td class="text-xs-left">{{ props.item.tel_1 }}</td>
+            <td class="text-xs-left">{{ props.item.tel_2 }}</td>
             <td class="text-xs-center">
-              <!-- Janela Modal de Edição dos Eventos -->
+              <!-- Janela Modal de Edição dos Capitães -->
               <v-dialog v-model="dialogEdit" persistent height="80%" width="80%">
                 <v-btn @click="getKey(props.item)" icon class="green--text" slot="activator">
                   <v-icon>edit</v-icon>
@@ -38,7 +38,7 @@
                   <v-card-text>
                     <v-container grid-list-md>
                       <v-layout row wrap style="margin: 30px;">
-                          <!-- Nome do Responsável -->
+                          <!-- Nome do Capitão -->
                           <v-flex xs12 sm3>
                             <v-text-field
                               label="Nome"
@@ -47,18 +47,6 @@
                               :rules="[(v) => !!v || 'Nome é obrigatório']"
                               required
                             ></v-text-field>
-                          </v-flex>
-                          <!-- Tipo do Responsável -->
-                          <v-flex xs12 sm4>
-                            <v-select
-                              box
-                              label="Tipo"
-                              v-bind:items="lista_tipo_responsavel"
-                              v-model="tipo"
-                              item-value="text"
-                              required
-                              :rules="[(v) => !!v || 'Tipo é obrigatório']"
-                          ></v-select>
                           </v-flex>
                           <!-- Congregação -->
                           <v-flex xs12 sm4>
@@ -72,23 +60,35 @@
                               :rules="[(v) => !!v || 'Congregação é obrigatório']"
                           ></v-select>
                           </v-flex>
-                          <!-- Email do Responsável -->
+                          <!-- Responsável -->
+                          <v-flex xs12 sm4>
+                            <v-select
+                              box
+                              label="Responsável"
+                              v-bind:items="lista_responsavel"
+                              v-model="responsavel"
+                              item-value="text"
+                              required
+                              :rules="[(v) => !!v || 'Responsável é obrigatório']"
+                          ></v-select>
+                          </v-flex>
+                          <!-- Telefone 1 -->
                           <v-flex xs12 sm4>
                             <v-text-field
-                              label="Email Resp."
-                              v-model="email_responsavel"
+                              label="Telefone 1"
+                              v-model="tel_1"
                               item-value="text"
-                              :rules="[(v) => !!v || 'Email é obrigatório']"
+                              :rules="[(v) => !!v || 'Telefone 1 é obrigatório']"
                               required
                             ></v-text-field>
                           </v-flex>
-                          <!-- Telefone Responsável -->
+                          <!-- Telefone 2 -->
                           <v-flex xs12 sm4>
                             <v-text-field
-                              label="Tel. Resp."
-                              v-model="tel_responsavel"
+                              label="Telefone 2"
+                              v-model="tel_2"
                               item-value="text"
-                              :rules="[(v) => !!v || 'Telefone é obrigatório']"
+                              :rules="[(v) => !!v || 'Telefone 2 é obrigatório']"
                               required
                             ></v-text-field>
                           </v-flex>
@@ -101,7 +101,7 @@
                       <v-icon>close</v-icon>
                       Fechar
                     </v-btn>
-                    <v-btn @click="salvaEdicaoResponsaveis(nome, tipo, congregacao, email_responsavel, tel_responsavel)" class="green--text darken-1" flat @click.native="dialogEdit = false">
+                    <v-btn @click="salvaEdicaoCapitaes(nome, congregacao, responsavel, tel_1, tel_2)" class="green--text darken-1" flat @click.native="dialogEdit = false">
                       <v-icon>save</v-icon>
                       Salvar
                     </v-btn>
@@ -116,10 +116,10 @@
                 </v-btn>
                 <v-card>
                   <v-card-title>
-                    <div class="headline">Excluir Responsável?</div>
+                    <div class="headline">Excluir Capitão?</div>
                   </v-card-title>
                   <v-spacer></v-spacer>
-                  <v-btn @click="removeResponsaveis()" class="green--text darken-1" flat="flat" @click.native="dialogExcluir = false">
+                  <v-btn @click="removeCapitaes()" class="green--text darken-1" flat="flat" @click.native="dialogExcluir = false">
                     <v-icon>check_circle</v-icon>
                     Sim
                   </v-btn>
@@ -142,29 +142,24 @@
 <script>
   import { Responsaveis } from '.././firebase';
   import { Congregacao } from '.././firebase';
+  import { Capitaes } from '.././firebase';
 
   import store from '.././store';
 
-  let responsavel_i = []
+  let capitaes_i = []
 
   export default {
-    name: "consulta_responsaveis",
+    name: "consulta_capitaes",
     data () {
       return {
-        responsavel_i,
+        capitaes_i,
         nome: '',
-        tipo: '',
         congregacao: '',
-        email_responsavel: '',
-        tel_responsavel: '',
+        responsavel: '',
+        tel_1: '',
+        tel_2: '',
         carregadoCong: false,
-        lista_tipo_responsavel: [
-          { text: 'Encarregado Geral' },
-          { text: 'Encarregado de Congregação' },
-          { text: 'Encarregado do Evento' },
-          { text: 'Ajudante de Congregação' },
-          { text: 'Ajudante do Evento' }
-        ],
+        carregadoResp: false,
         menu: false,
         modal: false,
         picker: null,
@@ -175,29 +170,31 @@
         pagination: {},
         dialogEdit: false,
         dialogExcluir: false,
-        keyResponsavel: '',
+        keyCapitao: '',
         headers: [
             { text: 'Nome', align: 'left'},
-            { text: 'Tipo', align:'left'},
             { text: 'Congregação', align:'left'},
-            { text: 'Email. Resp.', align: 'left'},
-            { text: 'Tel Resp.', align: 'left'},
+            { text: 'Responsável.', align: 'left'},
+            { text: 'Telefone 1', align: 'left'},
+            { text: 'Telefone 2', align: 'left'},
             { text: 'Alterar', align: 'center'},
             { text: 'Excluir', align: 'center'}
           ],
-        lista_congregacao: []
+        lista_congregacao: [],
+        lista_responsavel: []
       }
     },
     created: function(){
-      this.$bindAsArray('responsavel_i', Responsaveis);
+      this.$bindAsArray('capitaes_i', Capitaes);
     },
     firebase: {
-      congrega : Congregacao
+      congrega : Congregacao,
+      responsa : Responsaveis
     },
     methods: {
       //Excluir Responsaveis Cadastrado
-      removeResponsaveis() {
-        Responsaveis.child(this.keyResponsavel).remove();
+      removeCapitaes() {
+        Capitaes.child(this.keyCapitao).remove();
       },
       //Alimenta Combobox Congregacao
       getCongregacao() {
@@ -206,6 +203,15 @@
             this.lista_congregacao.push({ text: this.congrega[i].nome });
           }
           this.carregadoCong = true;
+        };
+      },
+      //Alimenta Combobox Responsvael
+      getCongregacao() {
+        if (this.carregadoResp == false) {
+          for (var i = 0; i < this.responsa.length; i++) {
+            this.lista_responsavel.push({ text: this.responsa[i].nome });
+          }
+          this.carregadoResp = true;
         };
       },
       //Recupera chave Json e alimenta campos de edição
@@ -217,24 +223,32 @@
           }
           this.carregadoCong = true;
         };
-        this.keyResponsavel = items['.key'];
 
-        this.nome = this.responsavel_i[this.responsavel_i.indexOf(items)].nome;
-        this.tipo = this.responsavel_i[this.responsavel_i.indexOf(items)].tipo;
-        this.congregacao = this.responsavel_i[this.responsavel_i.indexOf(items)].congregacao;
-        this.email_responsavel = this.responsavel_i[this.responsavel_i.indexOf(items)].email;
-        this.tel_responsavel = this.responsavel_i[this.responsavel_i.indexOf(items)].tel;
+        if (this.carregadoResp == false) {
+          for (var i = 0; i < this.responsa.length; i++) {
+            this.lista_responsavel.push({ text: this.responsa[i].nome });
+          }
+          this.carregadoResp = true;
+        };
+
+        this.keyCapitao = items['.key'];
+
+        this.nome = this.capitaes_i[this.capitaes_i.indexOf(items)].nome;
+        this.congregacao = this.capitaes_i[this.capitaes_i.indexOf(items)].congregacao;
+        this.responsavel = this.capitaes_i[this.capitaes_i.indexOf(items)].responsavel;
+        this.tel_1 = this.capitaes_i[this.capitaes_i.indexOf(items)].tel_1;
+        this.tel_2 = this.capitaes_i[this.capitaes_i.indexOf(items)].tel_2;
 
       },
 
       //Salva Registros Editados
-      salvaEdicaoResponsaveis(nome, tipo, congregacao, email_responsavel, tel_responsavel) {
-        Responsaveis.child(this.keyResponsavel).set({
+      salvaEdicaoCapitaes(nome, congregacao, responsavel, tel_1, tel_2) {
+        Capitaes.child(this.keyCapitao).set({
           nome,
-          tipo,
           congregacao,
-          email: email_responsavel,
-          tel: tel_responsavel
+          responsavel,
+          tel_1,
+          tel_2
         });
       }
     }
