@@ -37,7 +37,7 @@
             >
               Cadastrar
             </v-btn>
-            <p style="font-size: 12px; font-weight: bold; margin-left: 5px;">ou voltar para <strong><router-link to="/login">LOGIN</router-link>.</strong></p>
+            <p style="font-size: 12px; margin-left: 5px;">ou voltar para <strong><router-link to="/login">LOGIN</router-link>.</strong></p>
             <!-- <label style="color: red; font-size: 13px;">{{msgErroLogin}}</label> -->
           </v-card-text>
         </v-card>

@@ -14,3 +14,4 @@ export const Eventos = db.ref('Eventos');
 export const Congregacao = db.ref('Congregacao');
 export const Responsaveis = db.ref('Responsaveis');
 export const Capitaes = db.ref('Capitaes');
+export const Passageiros = db.ref('Passageiros');

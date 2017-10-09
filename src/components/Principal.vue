@@ -176,6 +176,9 @@ export default {
         case 'Capitães':
             this.$router.replace('capitaes')
             break;
+        case 'Passageiros':
+            this.$router.replace('passageiros')
+            break;
         default:
 
       }

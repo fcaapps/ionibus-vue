@@ -1,5 +1,5 @@
 <template>
-  <div class="consulta_capitaes">
+  <div class="consulta_passageiros">
     <v-card>
     <!-- Componente de Pesquisa   -->
     <v-container grid-list-md>
@@ -13,32 +13,32 @@
           v-model="search"
         ></v-text-field>
       </v-card-title>
-      <!-- Grid com a consulta de Capitães -->
+      <!-- Grid com a consulta de Passageiros -->
       <v-data-table
           v-bind:headers="headers"
-          v-bind:items="capitaes_i"
+          v-bind:items="passageiros_i"
           v-bind:search="search"
         >
         <template slot="items" scope="props">
             <td class="text-xs-left">{{ props.item.nome }}</td>
             <td class="text-xs-left">{{ props.item.congregacao }}</td>
-            <td class="text-xs-left">{{ props.item.responsavel }}</td>
-            <td class="text-xs-left">{{ props.item.tel_1 }}</td>
-            <td class="text-xs-left">{{ props.item.tel_2 }}</td>
+            <td class="text-xs-left">{{ props.item.capitao }}</td>
+            <td class="text-xs-left">{{ props.item.rg_cpf }}</td>
+            <td class="text-xs-left">{{ props.item.crianca_colo }}</td>
             <td class="text-xs-center">
-              <!-- Janela Modal de Edição dos Capitães -->
+              <!-- Janela Modal de Edição dos Passageiros -->
               <v-dialog v-model="dialogEdit" persistent height="80%" width="80%">
                 <v-btn @click="getKey(props.item)" icon class="green--text" slot="activator">
                   <v-icon>edit</v-icon>
                 </v-btn>
                 <v-card>
                   <v-toolbar style="height: 40px;" class="teal">
-                    <v-toolbar-title style="color: white; margin-left: 10px; margin-bottom: 23px;">Editando Capitão</v-toolbar-title>
+                    <v-toolbar-title style="color: white; margin-left: 10px; margin-bottom: 23px;">Editando Passageiros</v-toolbar-title>
                   </v-toolbar>
                   <v-card-text>
                     <v-container grid-list-md>
                       <v-layout row wrap style="margin: 30px;">
-                          <!-- Nome do Capitão -->
+                          <!-- Nome do Passageiro -->
                           <v-flex xs12 sm3>
                             <v-text-field
                               label="Nome"
@@ -60,37 +60,39 @@
                               :rules="[(v) => !!v || 'Congregação é obrigatório']"
                           ></v-select>
                           </v-flex>
-                          <!-- Responsável -->
+                          <!-- Capitão -->
                           <v-flex xs12 sm4>
                             <v-select
                               box
-                              label="Responsável"
-                              v-bind:items="lista_responsavel"
-                              v-model="responsavel"
+                              label="Capitão"
+                              v-bind:items="lista_capitao"
+                              v-model="capitao"
                               item-value="text"
                               required
-                              :rules="[(v) => !!v || 'Responsável é obrigatório']"
+                              :rules="[(v) => !!v || 'Capitão é obrigatório']"
                           ></v-select>
                           </v-flex>
-                          <!-- Telefone 1 -->
+                          <!-- RG/CPF -->
                           <v-flex xs12 sm4>
                             <v-text-field
-                              label="Telefone 1"
-                              v-model="tel_1"
+                              label="RG/CPF"
+                              v-model="rg_cpf"
                               item-value="text"
-                              :rules="[(v) => !!v || 'Telefone 1 é obrigatório']"
+                              :rules="[(v) => !!v || 'RG/CPF é obrigatório']"
                               required
                             ></v-text-field>
                           </v-flex>
-                          <!-- Telefone 2 -->
+                          <!-- Criança de Colo -->
                           <v-flex xs12 sm4>
-                            <v-text-field
-                              label="Telefone 2"
-                              v-model="tel_2"
+                            <v-select
+                              box
+                              label="Criança de Colo"
+                              v-bind:items="lista_crianca_colo"
+                              v-model="crianca_colo"
                               item-value="text"
-                              :rules="[(v) => !!v || 'Telefone 2 é obrigatório']"
                               required
-                            ></v-text-field>
+                              :rules="[(v) => !!v || 'Criança de Colo é obrigatório']"
+                            ></v-select>
                           </v-flex>
                       </v-layout>
                     </v-container>
@@ -101,7 +103,7 @@
                       <v-icon>close</v-icon>
                       Fechar
                     </v-btn>
-                    <v-btn @click="salvaEdicaoCapitaes(nome, congregacao, responsavel, tel_1, tel_2)" class="green--text darken-1" flat @click.native="dialogEdit = false">
+                    <v-btn @click="salvaEdicaoPassageiros(nome, congregacao, capitao, rg_cpf, crianca_colo)" class="green--text darken-1" flat @click.native="dialogEdit = false">
                       <v-icon>save</v-icon>
                       Salvar
                     </v-btn>
@@ -116,10 +118,10 @@
                 </v-btn>
                 <v-card>
                   <v-card-title>
-                    <div class="headline">Excluir Capitão?</div>
+                    <div class="headline">Excluir Passageiro?</div>
                   </v-card-title>
                   <v-spacer></v-spacer>
-                  <v-btn @click="removeCapitaes()" class="green--text darken-1" flat="flat" @click.native="dialogExcluir = false">
+                  <v-btn @click="removePassageiros()" class="green--text darken-1" flat="flat" @click.native="dialogExcluir = false">
                     <v-icon>check_circle</v-icon>
                     Sim
                   </v-btn>
@@ -140,26 +142,30 @@
   </div>
 </template>
 <script>
-  import { Responsaveis } from '.././firebase';
+  import { Passageiros } from '.././firebase';
   import { Congregacao } from '.././firebase';
   import { Capitaes } from '.././firebase';
 
   import store from '.././store';
 
-  let capitaes_i = []
+  let passageiros_i = []
 
   export default {
-    name: "consulta_capitaes",
+    name: "consulta_passageiros",
     data () {
       return {
-        capitaes_i,
+        passageiros_i,
         nome: '',
         congregacao: '',
-        responsavel: '',
-        tel_1: '',
-        tel_2: '',
+        capitao: '',
+        rg_cpf: '',
+        crianca_colo: '',
+        lista_crianca_colo: [
+          { text: 'Sim' },
+          { text: 'Não' }
+        ],
         carregadoCong: false,
-        carregadoResp: false,
+        carregadoCapi: false,
         menu: false,
         modal: false,
         picker: null,
@@ -170,31 +176,31 @@
         pagination: {},
         dialogEdit: false,
         dialogExcluir: false,
-        keyCapitao: '',
+        keyPassageiro: '',
         headers: [
             { text: 'Nome', align: 'left'},
             { text: 'Congregação', align:'left'},
-            { text: 'Responsável', align: 'left'},
-            { text: 'Telefone 1', align: 'left'},
-            { text: 'Telefone 2', align: 'left'},
+            { text: 'Capitão', align: 'left'},
+            { text: 'Rg/Cpf', align: 'left'},
+            { text: 'Criança Colo', align: 'center'},
             { text: 'Alterar', align: 'center'},
             { text: 'Excluir', align: 'center'}
           ],
         lista_congregacao: [],
-        lista_responsavel: []
+        lista_capitao: []
       }
     },
     created: function(){
-      this.$bindAsArray('capitaes_i', Capitaes);
+      this.$bindAsArray('passageiros_i', Passageiros);
     },
     firebase: {
       congrega : Congregacao,
-      responsa : Responsaveis
+      capita : Capitaes
     },
     methods: {
-      //Excluir Responsaveis Cadastrado
-      removeCapitaes() {
-        Capitaes.child(this.keyCapitao).remove();
+      //Excluir Passageiro Cadastrado
+      removePassageiros() {
+        Passageiros.child(this.keyPassageiro).remove();
       },
       //Alimenta Combobox Congregacao
       getCongregacao() {
@@ -205,13 +211,13 @@
           this.carregadoCong = true;
         };
       },
-      //Alimenta Combobox Responsvael
+      //Alimenta Combobox Capitão
       getCongregacao() {
-        if (this.carregadoResp == false) {
-          for (var i = 0; i < this.responsa.length; i++) {
-            this.lista_responsavel.push({ text: this.responsa[i].nome });
+        if (this.carregadoCapi == false) {
+          for (var i = 0; i < this.capita.length; i++) {
+            this.lista_capitao.push({ text: this.capita[i].nome });
           }
-          this.carregadoResp = true;
+          this.carregadoCapi = true;
         };
       },
       //Recupera chave Json e alimenta campos de edição
@@ -224,31 +230,31 @@
           this.carregadoCong = true;
         };
 
-        if (this.carregadoResp == false) {
-          for (var i = 0; i < this.responsa.length; i++) {
-            this.lista_responsavel.push({ text: this.responsa[i].nome });
+        if (this.carregadoCapi == false) {
+          for (var i = 0; i < this.capita.length; i++) {
+            this.lista_capitao.push({ text: this.capita[i].nome });
           }
-          this.carregadoResp = true;
+          this.carregadoCapi = true;
         };
 
-        this.keyCapitao = items['.key'];
+        this.keyPassageiro = items['.key'];
 
-        this.nome = this.capitaes_i[this.capitaes_i.indexOf(items)].nome;
-        this.congregacao = this.capitaes_i[this.capitaes_i.indexOf(items)].congregacao;
-        this.responsavel = this.capitaes_i[this.capitaes_i.indexOf(items)].responsavel;
-        this.tel_1 = this.capitaes_i[this.capitaes_i.indexOf(items)].tel_1;
-        this.tel_2 = this.capitaes_i[this.capitaes_i.indexOf(items)].tel_2;
+        this.nome = this.passageiros_i[this.passageiros_i.indexOf(items)].nome;
+        this.congregacao = this.passageiros_i[this.passageiros_i.indexOf(items)].congregacao;
+        this.capitao = this.passageiros_i[this.passageiros_i.indexOf(items)].capitao;
+        this.rg_cpf = this.passageiros_i[this.passageiros_i.indexOf(items)].rg_cpf;
+        this.crianca_colo = this.passageiros_i[this.passageiros_i.indexOf(items)].crianca_colo;
 
       },
 
       //Salva Registros Editados
-      salvaEdicaoCapitaes(nome, congregacao, responsavel, tel_1, tel_2) {
-        Capitaes.child(this.keyCapitao).set({
+      salvaEdicaoPassageiros(nome, congregacao, capitao, rg_cpf, crianca_colo) {
+        Passageiros.child(this.keyPassageiro).set({
           nome,
           congregacao,
-          responsavel,
-          tel_1,
-          tel_2
+          capitao,
+          rg_cpf,
+          crianca_colo
         });
       }
     }

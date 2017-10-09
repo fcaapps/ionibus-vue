@@ -37,7 +37,7 @@
             >
               Entrar no sistema
             </v-btn>
-            <p style="font-size: 12px; font-weight: bold; margin-left: 5px;">Não é cadastrado ? Cadastre-se <strong><router-link to="/signup">AQUI</router-link>.</strong></p>
+            <p style="font-size: 13px; margin-left: 5px;">Não é cadastrado ? Cadastre-se <strong><router-link to="/signup">AQUI</router-link>.</strong></p>
             <!-- <label style="color: red; font-size: 13px;">{{msgErroLogin}}</label> -->
           </v-card-text>
         </v-card>
